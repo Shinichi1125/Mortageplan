@@ -13,8 +13,7 @@ public class Mortage {
 	private String customer;
 	private int totalLoanEuro;
 	private int totalLoanCent; 
-	private int interestEuro;
-	private int interestCent; 
+	private float interest;
 	private int years;
 	
 	public Mortage() {
@@ -53,20 +52,12 @@ public class Mortage {
 		this.totalLoanCent = totalLoanCent;
 	}
 
-	public int getInterestEuro() {
-		return interestEuro;
+	public float getInterest() {
+		return interest;
 	}
 
-	public void setInterestEuro(int interestEuro) {
-		this.interestEuro = interestEuro;
-	}
-
-	public int getInterestCent() {
-		return interestCent;
-	}
-
-	public void setInterestCent(int interestCent) {
-		this.interestCent = interestCent;
+	public void setInterest(float interest) {
+		this.interest = interest;
 	}
 
 	public int getYears() {

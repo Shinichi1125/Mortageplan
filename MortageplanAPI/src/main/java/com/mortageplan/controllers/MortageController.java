@@ -46,8 +46,8 @@ public class MortageController {
 		decimalMortage.setCustomer(mortage.getCustomer());
 		float totalLoanCent = ((float)mortage.getTotalLoanCent()) / 100;
 		decimalMortage.setTotalLoan(((float)mortage.getTotalLoanEuro()) + totalLoanCent);
-		float interestCent = ((float)mortage.getInterestCent()) / 100;
-		decimalMortage.setInterest(((float)mortage.getInterestEuro()) + interestCent);
+		float interest = (mortage.getInterest()) / 100;
+		decimalMortage.setInterest(interest);
 		decimalMortage.setYears(mortage.getYears());
 		
 		return decimalMortage; 
