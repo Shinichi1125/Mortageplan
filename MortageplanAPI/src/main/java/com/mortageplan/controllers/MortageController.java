@@ -111,13 +111,15 @@ public class MortageController {
 		LOGGER.info("p (The number of payments) " + p);
 		
 		LOGGER.info("Calculating... ");
-		LOGGER.info("b * (1+b): " + b * (1+b));
-		LOGGER.info("calculatePower((b*(1+b)), p): " + calculatePower((b*(1+b)), p));
 		LOGGER.info("(1+b): " + (1+b));
-		LOGGER.info("calculatePower((1+b), p): " + calculatePower((1+b), p));
-		LOGGER.info("calculatePower((1+b), p) - 1: " + (calculatePower((1+b), p) - 1));
-		LOGGER.info("( calculatePower((b*(1+b)), p) / (calculatePower((1+b), p) - 1) ): " + ( calculatePower((b*(1+b)), p) / (calculatePower((1+b), p) - 1)) );
-		E = U *  ( calculatePower((b*(1+b)), p) / (calculatePower((1+b), p) - 1) ); 
+		LOGGER.info("(1+b)^p: " + calculatePower((1+b), p));
+		LOGGER.info("[b(1+b)^p]: " + b *  calculatePower((1+b), p));
+		LOGGER.info("(1+b): " + (1+b));
+		LOGGER.info("p-1: " + (p-1));
+		LOGGER.info("[(1+b)^p-1]: " + calculatePower((1+b), (p-1)));
+		LOGGER.info("U[b(1+b)^p]: " + U * b *  calculatePower((1+b), p));
+		LOGGER.info("U[b(1+b)^p] / [(1+b)^p-1]: " + U * b *  calculatePower((1+b), p) / (calculatePower((1+b), (p-1))));
+		E = U * b *  calculatePower((1+b), p) / (calculatePower((1+b), (p-1)));
 		
 		return E; 
 	}
