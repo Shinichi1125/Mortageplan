@@ -34,6 +34,18 @@ public class MortageControllerTests {
 	
 	private int JuhaID = 1; 
 	
+	DecimalMortage combineEuroAndCent(Mortage mortage) {
+		DecimalMortage decimalMortage = new DecimalMortage();
+		decimalMortage.setId(mortage.getId());
+		decimalMortage.setCustomer(mortage.getCustomer());
+		float totalLoanCent = ((float)mortage.getTotalLoanCent()) / 100;
+		decimalMortage.setTotalLoan(((float)mortage.getTotalLoanEuro()) + totalLoanCent);
+		float interest = (mortage.getInterest()) / 100;
+		decimalMortage.setInterest(interest);
+		decimalMortage.setYears(mortage.getYears());	
+		return decimalMortage; 
+	}
+	
 	@Test
 	@DisplayName("When a get request with an ID number is sent, the customer whose ID matches gets returned in the form of JSON")
 	public void testGetDecimalMortage() throws Exception {
@@ -45,16 +57,22 @@ public class MortageControllerTests {
 		existingCustomer.setInterest((float) 0.05);
 		existingCustomer.setYears(2);
 		
+		DecimalMortage decimalExistingCustomer = combineEuroAndCent(existingCustomer);
+		String expectedName = decimalExistingCustomer.getCustomer();
+		float expectedTotalLoan = decimalExistingCustomer.getTotalLoan();
+		float expectedInterest = decimalExistingCustomer.getInterest();
+		int expectedYears = decimalExistingCustomer.getYears();
+		
 		Optional<Mortage> existingCustomerOpt = Optional.ofNullable(existingCustomer);
 		
 		when(repository.findById(JuhaID)).thenReturn(existingCustomerOpt);
 		
 		mockMvc
-				.perform(MockMvcRequestBuilders.get("/api/mortage/{id}", JuhaID)) 
-				.andExpect(MockMvcResultMatchers.status().is(HttpStatus.OK.value()))
-		        .andExpect(jsonPath("$.customer").value("Juha"))
-		        .andExpect(jsonPath("$.totalLoan").value(1000.0))
-		        //.andExpect(jsonPath("$.interest").value(0.05))
-		        .andExpect(jsonPath("$.years").value(2));
+			.perform(MockMvcRequestBuilders.get("/api/mortage/{id}", JuhaID)) 
+			.andExpect(MockMvcResultMatchers.status().is(HttpStatus.OK.value()))
+		        .andExpect(jsonPath("$.customer").value(expectedName))
+		        .andExpect(jsonPath("$.totalLoan").value(expectedTotalLoan))
+		        .andExpect(jsonPath("$.interest").value(expectedInterest))
+		        .andExpect(jsonPath("$.years").value(expectedYears));
 	}
 }
