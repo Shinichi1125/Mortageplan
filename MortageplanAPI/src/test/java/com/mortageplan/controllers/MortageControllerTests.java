@@ -33,6 +33,7 @@ public class MortageControllerTests {
 	private MockMvc mockMvc;
 	
 	private int JuhaID = 1; 
+	private int KarvinenID = 2; 
 	
 	DecimalMortage combineEuroAndCent(Mortage mortage) {
 		DecimalMortage decimalMortage = new DecimalMortage();
@@ -44,6 +45,14 @@ public class MortageControllerTests {
 		decimalMortage.setInterest(interest);
 		decimalMortage.setYears(mortage.getYears());	
 		return decimalMortage; 
+	}
+	
+	double calculatePower(double base, int power) {
+	    float result = 1;
+	    for( int i = 0; i < power; i++ ) {
+	        result *= base;
+	    }
+	    return result;
 	}
 	
 	@Test
@@ -74,5 +83,35 @@ public class MortageControllerTests {
 		        .andExpect(jsonPath("$.totalLoan").value(expectedTotalLoan))
 		        .andExpect(jsonPath("$.interest").value(expectedInterest))
 		        .andExpect(jsonPath("$.years").value(expectedYears));
+	}
+	
+	@Test
+	@DisplayName("When a get request with an ID number is sent, the fixed monthly payment that the customer needs to pay gets returned in the form of JSON")
+	public void testGetMonthlyPayment() throws Exception {
+		Mortage existingCustomer = new Mortage();
+		existingCustomer.setId(KarvinenID);
+		existingCustomer.setCustomer("Karvinen");
+		existingCustomer.setTotalLoanEuro(4356);
+		existingCustomer.setTotalLoanCent(0);
+		existingCustomer.setInterest((float) 0.0127);
+		existingCustomer.setYears(6);
+		
+		DecimalMortage decimalExistingCustomer = combineEuroAndCent(existingCustomer);
+		double expectedFixedMonthlyPayment = 0;    // Fixed monthly payment 
+		float b = 0 ; 
+		b = decimalExistingCustomer.getInterest() / 12;    // Interest on a monthly basis
+		float U = 0 ; 
+		U = decimalExistingCustomer.getTotalLoan();    // Total loan
+		int p = 12 * decimalExistingCustomer.getYears();    // The number of payments 
+		// expectedFixedMonthlyPayment: 62.86576062270081
+		expectedFixedMonthlyPayment = U * (b * calculatePower((1+b), p)) / (calculatePower((1+b), p) - 1);	
+		
+		Optional<Mortage> existingCustomerOpt = Optional.ofNullable(existingCustomer);
+		when(repository.findById(KarvinenID)).thenReturn(existingCustomerOpt);
+		
+		mockMvc
+		.perform(MockMvcRequestBuilders.get("/api/monthly-payment/{id}", KarvinenID)) 
+		.andExpect(MockMvcResultMatchers.status().is(HttpStatus.OK.value()))
+	        .andExpect(jsonPath("$").value(expectedFixedMonthlyPayment));
 	}
 }
