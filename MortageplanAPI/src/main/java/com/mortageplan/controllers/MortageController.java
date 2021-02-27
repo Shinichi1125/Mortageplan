@@ -47,6 +47,8 @@ public class MortageController {
 		float totalLoanCent = ((float)mortage.getTotalLoanCent()) / 100;
 		decimalMortage.setTotalLoan(((float)mortage.getTotalLoanEuro()) + totalLoanCent);
 		float interest = (mortage.getInterest()) / 100;
+//		String interestStr = String.format("%.2g%n", interest);
+//		interest = Float.parseFloat(interestStr);
 		decimalMortage.setInterest(interest);
 		decimalMortage.setYears(mortage.getYears());
 		
@@ -93,9 +95,9 @@ public class MortageController {
 	public double getMonthlyPayment(@PathVariable("id") int id) {
 		Mortage mortage = repository.findById(id).get();
 		DecimalMortage decimalMortage = combineEuroAndCent(mortage);
-		LOGGER.info("The content of decimalMortage... ");
-		LOGGER.info("decimalMortage.getInterest() " + decimalMortage.getInterest());
-		LOGGER.info("decimalMortage.getTotalLoan() " + decimalMortage.getTotalLoan());
+//		LOGGER.info("The content of decimalMortage... ");
+//		LOGGER.info("decimalMortage.getInterest() " + decimalMortage.getInterest());
+//		LOGGER.info("decimalMortage.getTotalLoan() " + decimalMortage.getTotalLoan());
 		
 		double E = 0;    // Fixed monthly payment 
 		float b = 0 ; 
@@ -104,23 +106,23 @@ public class MortageController {
 		U = decimalMortage.getTotalLoan();    // Total loan
 		int p = 12 * decimalMortage.getYears();    // The number of payments 
 		
-		LOGGER.info("Before the formula... ");
-		LOGGER.info("E (Fixed monthly payment): " + E);
-		LOGGER.info("b (Interest on a monthly basis): " + b);
-		LOGGER.info("U (Total loan): " + U);
-		LOGGER.info("p (The number of payments) " + p);
-		
-		LOGGER.info("Calculating... ");
-		LOGGER.info("(1+b): " + (1+b));
-		LOGGER.info("(1+b)^p: " + calculatePower((1+b), p));
-		LOGGER.info("[b(1+b)^p]: " + b *  calculatePower((1+b), p));
-		LOGGER.info("(1+b): " + (1+b));
-		LOGGER.info("p-1: " + (p-1));
-		LOGGER.info("[(1+b)^p-1]: " + calculatePower((1+b), (p-1)));
-		LOGGER.info("U[b(1+b)^p]: " + U * b *  calculatePower((1+b), p));
-		LOGGER.info("U[b(1+b)^p] / [(1+b)^p-1]: " + U * b *  calculatePower((1+b), p) / (calculatePower((1+b), (p-1))));
+//		LOGGER.info("Before the formula... ");
+//		LOGGER.info("E (Fixed monthly payment): " + E);
+//		LOGGER.info("b (Interest on a monthly basis): " + b);
+//		LOGGER.info("U (Total loan): " + U);
+//		LOGGER.info("p (The number of payments) " + p);
+//		
+//		LOGGER.info("Calculating... ");
+//		LOGGER.info("(1+b): " + (1+b));
+//		LOGGER.info("(1+b)^p: " + calculatePower((1+b), p));
+//		LOGGER.info("[b(1+b)^p]: " + b *  calculatePower((1+b), p));
+//		LOGGER.info("(1+b): " + (1+b));
+//		LOGGER.info("p-1: " + (p-1));
+//		LOGGER.info("[(1+b)^p-1]: " + calculatePower((1+b), (p-1)));
+//		LOGGER.info("U[b(1+b)^p]: " + U * b *  calculatePower((1+b), p));
+//		LOGGER.info("U[b(1+b)^p] / [(1+b)^p-1]: " + U * b *  calculatePower((1+b), p) / (calculatePower((1+b), (p-1))));
 		//E = U * b *  calculatePower((1+b), p) / (calculatePower((1+b), (p-1)));
-	    E = U * (b * calculatePower((1+b), p)) / (calculatePower((1+b), p) - 1);
+		E = U * (b * calculatePower((1+b), p)) / (calculatePower((1+b), p) - 1);
 		return E; 
 	}
 }
