@@ -99,7 +99,7 @@ public class MortageController {
 		
 		double E = 0;    // Fixed monthly payment 
 		float b = 0 ; 
-		b = decimalMortage.getInterest();    // Interest on a monthly basis
+		b = decimalMortage.getInterest() / 12;    // Interest on a monthly basis
 		float U = 0 ; 
 		U = decimalMortage.getTotalLoan();    // Total loan
 		int p = 12 * decimalMortage.getYears();    // The number of payments 
@@ -119,8 +119,8 @@ public class MortageController {
 		LOGGER.info("[(1+b)^p-1]: " + calculatePower((1+b), (p-1)));
 		LOGGER.info("U[b(1+b)^p]: " + U * b *  calculatePower((1+b), p));
 		LOGGER.info("U[b(1+b)^p] / [(1+b)^p-1]: " + U * b *  calculatePower((1+b), p) / (calculatePower((1+b), (p-1))));
-		E = U * b *  calculatePower((1+b), p) / (calculatePower((1+b), (p-1)));
-		
+		//E = U * b *  calculatePower((1+b), p) / (calculatePower((1+b), (p-1)));
+	    E = U * (b * calculatePower((1+b), p)) / (calculatePower((1+b), p) - 1);
 		return E; 
 	}
 }
