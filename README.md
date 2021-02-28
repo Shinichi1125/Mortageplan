@@ -1,6 +1,9 @@
 # Mortgageplan
 An app that calculates the fixed monthly payment for the user's mortgage. 
 
+# Top page screenshot
+![CustomerDataList](https://user-images.githubusercontent.com/37083992/109425252-15377500-79f0-11eb-98ba-e0c5187ad93f.png)
+
 # How to start the project in a local environment
 * Replicate the entire project to your own PC by git clone
 * Start the backend of the "MortageplanAPI" directory 
