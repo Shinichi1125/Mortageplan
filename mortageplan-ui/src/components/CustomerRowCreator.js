@@ -27,16 +27,14 @@ class CustomerRowCreator extends React.Component{
     monthlyPayment = Math.round((monthlyPayment + Number.EPSILON) * 100) / 100
 
     return(
-      <div>
-        <p>
-          ID: {customer.id}, 
-          Customer Name: {customer.customer}, 
-          Total Loan: €{customer.totalLoan}, 
-          Interest: {interest}%, 
-          Years: {customer.years}, 
-          Monthly Payment: €{monthlyPayment}
-        </p>
-      </div>
+        <tr>
+          <td>{customer.id}</td> 
+          <td>{customer.customer}</td> 
+          <td>{customer.totalLoan}</td>
+          <td>{interest}%</td> 
+          <td>{customer.years}</td>
+          <td>€{monthlyPayment}</td>
+        </tr>   
     )
   }
 }

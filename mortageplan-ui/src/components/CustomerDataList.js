@@ -27,15 +27,30 @@ class CustomerDataList extends React.Component {
       <div>
         <p>CustomerDataList</p>
         <Link to='/customer/create'>+ New Customer</Link>
-        {this.state.allCustomers.map((customer)=>
-          <CustomerRowCreator 
-            key = {customer.id}
-            id={customer.id}
-            customer={customer.customer}
-            totalLoan={customer.totalLoan}
-            interest={customer.interest}
-            years={customer.years}
-          />)}
+        <table align='center'>
+          <thead>
+            <tr>
+              <th>ID</th>
+              <th>Customer Name</th>
+              <th>Total Loan</th>
+              <th>Interest</th>
+              <th>Years</th>
+              <th>Monthly Payment</th>
+            </tr>
+          </thead>
+          <tbody>
+            {this.state.allCustomers.map((customer)=>
+            <CustomerRowCreator 
+              key = {customer.id}
+              id={customer.id}
+              customer={customer.customer}
+              totalLoan={customer.totalLoan}
+              interest={customer.interest}
+              years={customer.years}
+            />)}
+          </tbody>
+        </table>
+        
       </div>
     )
   }
