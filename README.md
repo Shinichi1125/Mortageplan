@@ -12,3 +12,10 @@ An app that calculates the fixed monthly payment for the user's mortgage.
 * Click the "Submit" button
 * You will be redirected to the top page and the new customer's information will be displayed along with the fixed monthly payment
 
+# What I would have added if I had had more time
+* More comprehensive unit test cases (so far I have written just a few test case scenarios)
+* More thorough validations
+  * The backend doesn't check if the input is not float (something like 0.5) for totalLoanEuro, totalLoanCent, years 
+  * I haven't confirmed that the validation of the frontend side is properly working
+* Styling the UI more nicely by using CSS / Bootstrap
+* Maybe adding some more functions (update, delete etc) 
