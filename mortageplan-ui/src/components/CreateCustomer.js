@@ -1,7 +1,7 @@
 import React from 'react';
 import DataService from '../api/DataService';
-import { SMALL_INPUT_FIELD, TEXTAREA_COLS, TEXTAREA_ROWS } from '../Constants';
-import { Formik, Form, Field, ErrorMessage } from 'formik'; 
+import { SMALL_INPUT_FIELD } from '../Constants';
+import { Formik, Form, Field, ErrorMessage, FormikHelpers } from 'formik'; 
 
 class CreateCustomer extends React.Component{
   constructor(props){
@@ -16,21 +16,53 @@ class CreateCustomer extends React.Component{
           years: 0  
         }
       }
+    this.validate = this.validate.bind(this)
     this.onSubmit = this.onSubmit.bind(this)
     this.cancelCreate = this.cancelCreate.bind(this)
+  }
+
+  validate(values){
+    let errors = {...values};
+    let customer = errors.customer;
+    let totalLoanEuro = errors.totalLoanEuro;
+    let totalLoanCent = errors.totalLoanCent; 
+    let interest = errors.interest;
+    let years = errors.years; 
+
+    if(customer===''){
+      errors.customer = 'Enter a customer name';
+    }
+    if(!(totalLoanEuro >= 0 && totalLoanEuro <= 10000000)){
+      errors.totalLoanEuro = 'Enter a valid amount of loan';
+    }
+    if(!(totalLoanCent >= 0 && totalLoanCent <= 99)){
+      errors.totalLoanCent = 'Cents must be somewhere between 0-99';
+    }
+    if(!(interest >= 0 && interest <= 100)){
+      errors.interest = 'Interest must be somewhere between 0-100%';
+    }
+    if(!(years >= 0 && years <= 100)){
+      errors.years = 'The valid number of years is up to 100';
+    }
   }
 
   cancelCreate(){
     this.props.history.push('/')
   }
 
-  async onSubmit(values){
+  async onSubmit(values, formikBag){
     let rawCustomerData = {
       ...values,  
       id: this.state.customerData.id
     };
     await DataService.createCustomer(rawCustomerData)
-    .then(() => this.props.history.push('/'))       
+    .then(() => this.props.history.push('/'))
+    .catch((error) => {
+      console.log(error.response.data.message);
+      formikBag.setErrors({
+        customer: error.response.data.message,
+      })  
+    })         
   }
   
   render(){
@@ -44,6 +76,9 @@ class CreateCustomer extends React.Component{
           <Formik
             initialValues={{init}}
             onSubmit={this.onSubmit}
+            validate = {this.validate}
+            validateOnChange = {false}
+            validateOnBlur = {false}
             enableReinitialize={true}
           >
             {

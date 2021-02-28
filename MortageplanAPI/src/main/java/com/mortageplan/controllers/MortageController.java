@@ -7,6 +7,8 @@ import java.util.Optional;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.HttpStatus;
+import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.CrossOrigin;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -104,8 +106,18 @@ public class MortageController {
 		return E; 
 	}
 	
+	public class Error {
+		String message; 	
+		public Error(String message) {
+			this.message = message; 
+		}		
+		public String getMessage() {
+			return message; 
+		}
+	}
+	
 	@RequestMapping(value = "/save-customer", method = RequestMethod.POST)
-	public Mortage saveCustomer(
+	public ResponseEntity<?> saveCustomer(
 			@RequestParam("customer") String customer,
 			@RequestParam("totalLoanEuro") int totalLoanEuro,
 			@RequestParam("totalLoanCent") int totalLoanCent,
@@ -119,6 +131,33 @@ public class MortageController {
 		mortage.setInterest(interest);
 		mortage.setYears(years);
 		
-		return repository.save(mortage); 
+		if(customer.length() < 2) {
+			return new ResponseEntity<>(
+				new Error("The name should be at least 2 characters long"),  
+				HttpStatus.BAD_REQUEST
+			);
+		}else if(!(totalLoanEuro >= 0 && totalLoanEuro <= 10000000)) {
+			return new ResponseEntity<>(
+				new Error("The accepted amount of value is 0-10,000,000"),  
+				HttpStatus.BAD_REQUEST
+			);
+		}else if(!(totalLoanCent >= 0 && totalLoanCent <= 99)) {
+			return new ResponseEntity<>(
+				new Error("The value cents should not deviate from the range of 0-99"),  
+				HttpStatus.BAD_REQUEST
+			);
+		}else if(!(interest >= 0 && interest <= 100)) {
+			return new ResponseEntity<>(
+				new Error("The interest must be no less than 0%, no more than 100%"),  
+				HttpStatus.BAD_REQUEST
+			);
+		}else if(!(years >= 0 && years <= 100)) {
+			return new ResponseEntity<>(
+				new Error("Please enter a valid number of years"),  
+				HttpStatus.BAD_REQUEST
+			);
+		}else {
+			return new ResponseEntity<>(repository.save(mortage), HttpStatus.OK);
+		}	
 	}
 }
