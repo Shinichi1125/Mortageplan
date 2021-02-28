@@ -104,4 +104,22 @@ public class MortageController {
 		E = U * (b * calculatePower((1+b), p)) / (calculatePower((1+b), p) - 1);
 		return E; 
 	}
+	
+	@RequestMapping(value = "/save-customer", method = RequestMethod.POST)
+	public Mortage saveCustomer(
+			@RequestParam("customer") String customer,
+			@RequestParam("totalLoanEuro") int totalLoanEuro,
+			@RequestParam("totalLoanCent") int totalLoanCent,
+			@RequestParam("interest") float interest,
+			@RequestParam("years") int years) {
+		
+		Mortage mortage = new Mortage();
+		mortage.setCustomer(customer);
+		mortage.setTotalLoanEuro(totalLoanEuro);
+		mortage.setTotalLoanCent(totalLoanCent);
+		mortage.setInterest(interest);
+		mortage.setYears(years);
+		
+		return repository.save(mortage); 
+	}
 }

@@ -30,6 +30,7 @@ class CustomerRowCreator extends React.Component<CustomerData>{
     return(
       <div>
         <p>
+          ID: {customer.id}, 
           Customer Name: {customer.customer}, 
           Total Loan: €{customer.totalLoan}, 
           Interest: {interest}%, 
