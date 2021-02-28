@@ -72,17 +72,16 @@ public class MortageControllerTests {
 		float expectedInterest = decimalExistingCustomer.getInterest();
 		int expectedYears = decimalExistingCustomer.getYears();
 		
-		Optional<Mortage> existingCustomerOpt = Optional.ofNullable(existingCustomer);
-		
+		Optional<Mortage> existingCustomerOpt = Optional.ofNullable(existingCustomer);	
 		when(repository.findById(JuhaID)).thenReturn(existingCustomerOpt);
 		
 		mockMvc
-			.perform(MockMvcRequestBuilders.get("/api/mortage/{id}", JuhaID)) 
-			.andExpect(MockMvcResultMatchers.status().is(HttpStatus.OK.value()))
-		        .andExpect(jsonPath("$.customer").value(expectedName))
-		        .andExpect(jsonPath("$.totalLoan").value(expectedTotalLoan))
-		        .andExpect(jsonPath("$.interest").value(expectedInterest))
-		        .andExpect(jsonPath("$.years").value(expectedYears));
+		.perform(MockMvcRequestBuilders.get("/api/mortage/{id}", JuhaID)) 
+		.andExpect(MockMvcResultMatchers.status().is(HttpStatus.OK.value()))
+		    .andExpect(jsonPath("$.customer").value(expectedName))
+		    .andExpect(jsonPath("$.totalLoan").value(expectedTotalLoan))
+		    .andExpect(jsonPath("$.interest").value(expectedInterest))
+		    .andExpect(jsonPath("$.years").value(expectedYears));
 	}
 	
 	@Test

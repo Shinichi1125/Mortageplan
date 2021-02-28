@@ -1,6 +1,6 @@
 export default interface CustomerData {
   id: number;
-  customerName: string;
+  customer: string;
   totalLoan: number; 
   interest: number; 
   years: number;  

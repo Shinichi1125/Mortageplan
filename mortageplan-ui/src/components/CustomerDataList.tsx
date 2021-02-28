@@ -12,8 +12,6 @@ class CustomerDataList extends React.Component {
   updatePage(){
     DataService.retrieveAllCustomerData()
     .then(res => {
-      console.log("res.data: ");
-      console.log(res.data);
       this.setState({
         allCustomers:[...res.data]
       }) 
@@ -28,7 +26,15 @@ class CustomerDataList extends React.Component {
     return(
       <div>
         <p>CustomerDataList</p>
-        
+        {this.state.allCustomers.map((customer)=>
+          <CustomerRowCreator 
+            key = {customer.id}
+            id={customer.id}
+            customer={customer.customer}
+            totalLoan={customer.totalLoan}
+            interest={customer.interest}
+            years={customer.years}
+          />)}
       </div>
     )
   }
@@ -36,14 +42,3 @@ class CustomerDataList extends React.Component {
 
 export default CustomerDataList; 
 
-/*
-{this.state.allCustomers.map((customer)=>
-          <CustomerRowCreator 
-            key = {customer.id}
-            id={customer.id}
-            customerName={customer.customerName}
-            totalLoan={customer.totalLoan}
-            interest={customer.interest}
-            years={customer.years}
-          />)}
-*/

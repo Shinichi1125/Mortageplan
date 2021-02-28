@@ -7,6 +7,9 @@ class DataService {
     return axios.get(`${API_URL}/all-decimal-mortages`);
   }
   
+  getMonthlyPayments(id: number){
+    return axios.get(`${API_URL}/monthly-payment/${id}`);
+  }
 }
 
 export default new DataService()
