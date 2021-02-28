@@ -26,6 +26,7 @@ class CustomerDataList extends React.Component {
     return(
       <div>
         <p>CustomerDataList</p>
+        <Link to='/customer/create'>+ New Customer</Link>
         {this.state.allCustomers.map((customer)=>
           <CustomerRowCreator 
             key = {customer.id}

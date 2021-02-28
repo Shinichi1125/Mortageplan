@@ -34,7 +34,7 @@ class CreateCustomer extends React.Component{
   }
   
   render(){
-    let { id, customer, totalLoanEuro, totalLoanCent,  interest, years } = this.state.customerData; 
+    let init = { id:null, customer:'', totalLoanEuro:0, totalLoanCent:0,  interest:0, years:0 }; 
 
     return(
       <div>
@@ -42,7 +42,7 @@ class CreateCustomer extends React.Component{
         <h2>Create Customer</h2>
         <div>
           <Formik
-            initialValues={{ id, customer, totalLoanEuro, totalLoanCent, interest, years}}
+            initialValues={{init}}
             onSubmit={this.onSubmit}
             enableReinitialize={true}
           >
@@ -69,16 +69,14 @@ class CreateCustomer extends React.Component{
                   </fieldset>
                   <ErrorMessage name="interest" component="div" className="text-danger"/>
                   <fieldset className="form-group">
-                    <Field as="textarea" name="interest"
-                      placeholder="Interest" 
-                      cols={TEXTAREA_COLS} rows={TEXTAREA_ROWS}
+                    <Field type="text" name="interest"
+                      placeholder="Interest" size={SMALL_INPUT_FIELD}
                     />
                   </fieldset>
                   <ErrorMessage name="years" component="div" className="text-danger"/>
                   <fieldset className="form-group">
-                    <Field as="textarea" name="years"
-                      placeholder="Years" 
-                      cols={TEXTAREA_COLS} rows={TEXTAREA_ROWS}
+                    <Field type="text" name="years"
+                      placeholder="Years" size={SMALL_INPUT_FIELD}
                     />
                   </fieldset>
                   <br/><br/>
