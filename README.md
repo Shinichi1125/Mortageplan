@@ -21,4 +21,5 @@ An app that calculates the fixed monthly payment for the user's mortgage.
   * The backend doesn't check if the input is not float (something like 0.5) for totalLoanEuro, totalLoanCent, years 
   * I haven't confirmed that the validation of the frontend side is properly working
 * Styling the UI more nicely by using CSS / Bootstrap
-* Maybe adding some more functions (update, delete etc) 
+* ~~Maybe adding some more functions~~ (update, ~~delete~~ etc) (partially done)
+* ~~Refactoring the code to reduce redundancy~~ (Done)
