@@ -105,7 +105,7 @@ public class MortageControllerTests {
 		U = decimalExistingCustomer.getTotalLoan();    // Total loan
 		int p = 12 * decimalExistingCustomer.getYears();    // The number of payments 
 		// expectedFixedMonthlyPayment: 62.86576062270081
-		expectedFixedMonthlyPayment = U * (b * helper.calculatePower((1+b), p)) / (helper.calculatePower((1+b), p) - 1);
+		expectedFixedMonthlyPayment = helper.calculateMonthlyPayment(b, U, p);
 		
 		Optional<Mortage> existingCustomerOpt = Optional.ofNullable(existingCustomer);
 		when(repository.findById(KarvinenID)).thenReturn(existingCustomerOpt);

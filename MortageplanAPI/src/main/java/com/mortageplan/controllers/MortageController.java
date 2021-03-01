@@ -98,7 +98,7 @@ public class MortageController {
 		U = decimalMortage.getTotalLoan();    // Total loan
 		int p = 12 * decimalMortage.getYears();    // The number of payments 
 		
-		E = U * (b * helper.calculatePower((1+b), p)) / (helper.calculatePower((1+b), p) - 1);
+		E = helper.calculateMonthlyPayment(b, U, p);
 		return E; 
 	}
 	
