@@ -70,59 +70,59 @@ class CreateCustomer extends React.Component{
 
     return(
       <div>
-      <div className="object-details">
-        <h2>Create Customer</h2>
-        <div>
-          <Formik
-            initialValues={{init}}
-            onSubmit={this.onSubmit}
-            validate = {this.validate}
-            validateOnChange = {false}
-            validateOnBlur = {false}
-            enableReinitialize={true}
-          >
-            {
-              (props) => (
-                <Form>
-                  <ErrorMessage name="customer" component="div" className="text-danger"/>
-                  <fieldset className="form-group">
-                    <Field type="text" name="customer" 
-                      placeholder="Your name" size={SMALL_INPUT_FIELD}
-                    />
-                  </fieldset>
-                  <ErrorMessage name="totalLoanEuro" component="div" className="text-danger"/>
-                  <fieldset className="form-group">
-                    <Field type="text" name="totalLoanEuro" 
-                      placeholder="Total Loan (Euro)" size={SMALL_INPUT_FIELD}
-                    />
-                  </fieldset>
-                  <ErrorMessage name="totalLoanCent" component="div" className="text-danger"/>
-                  <fieldset className="form-group">
-                    <Field type="text" name="totalLoanCent" 
-                      placeholder="Total Loan (Cents)" size={SMALL_INPUT_FIELD}
-                    />
-                  </fieldset>
-                  <ErrorMessage name="interest" component="div" className="text-danger"/>
-                  <fieldset className="form-group">
-                    <Field type="text" name="interest"
-                      placeholder="Interest" size={SMALL_INPUT_FIELD}
-                    />
-                  </fieldset>
-                  <ErrorMessage name="years" component="div" className="text-danger"/>
-                  <fieldset className="form-group">
-                    <Field type="text" name="years"
-                      placeholder="Years" size={SMALL_INPUT_FIELD}
-                    />
-                  </fieldset>
-                  <br/><br/>
-                  <button className="btn btn-secondary" onClick={() => this.cancelCreate()}>Cancel</button>&nbsp;
-                  <button type="submit" className="btn btn-primary">Save</button>
-                </Form>
-              )
-            }      
-          </Formik>
+        <br/>
+        <div className="object-details">
+          <h2>Create Customer</h2>
+          <div>
+            <Formik
+              initialValues={{init}}
+              onSubmit={this.onSubmit}
+              validate = {this.validate}
+              validateOnChange = {false}
+              validateOnBlur = {false}
+              enableReinitialize={true}
+            >
+              {
+                (props) => (
+                  <Form>
+                    <ErrorMessage name="customer" component="div" className="text-danger"/>
+                    <fieldset className="form-group">
+                      <Field type="text" name="customer" 
+                        placeholder="Your name" size={SMALL_INPUT_FIELD}
+                      />
+                    </fieldset>
+                    <ErrorMessage name="totalLoanEuro" component="div" className="text-danger"/>
+                    <fieldset className="form-group">
+                      <Field type="text" name="totalLoanEuro" 
+                        placeholder="Total Loan (Euro)" size={SMALL_INPUT_FIELD}
+                      />
+                    </fieldset>
+                    <ErrorMessage name="totalLoanCent" component="div" className="text-danger"/>
+                    <fieldset className="form-group">
+                      <Field type="text" name="totalLoanCent" 
+                        placeholder="Total Loan (Cents)" size={SMALL_INPUT_FIELD}
+                      />
+                    </fieldset>
+                    <ErrorMessage name="interest" component="div" className="text-danger"/>
+                    <fieldset className="form-group">
+                      <Field type="text" name="interest"
+                        placeholder="Interest" size={SMALL_INPUT_FIELD}
+                      />
+                    </fieldset>
+                    <ErrorMessage name="years" component="div" className="text-danger"/>
+                    <fieldset className="form-group">
+                      <Field type="text" name="years"
+                        placeholder="Years" size={SMALL_INPUT_FIELD}
+                      />
+                    </fieldset>
+                    <button className="btn btn-secondary" onClick={() => this.cancelCreate()}>Cancel</button>&nbsp;
+                    <button type="submit" className="btn btn-primary">Save</button>
+                  </Form>
+                )
+              }      
+            </Formik>
+          </div>
         </div>
-      </div>
       </div>
     )
   }

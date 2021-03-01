@@ -42,7 +42,12 @@ class CustomerRowCreator extends React.Component{
           <td>{interest}%</td> 
           <td>{customer.years}</td>
           <td>€{monthlyPayment}</td>
-          <button onClick={() => this.deleteCustomer(customer.id)}>Delete</button>
+          <button 
+            onClick={() => this.deleteCustomer(customer.id)}
+            className="action-button danger"
+          >
+            Delete
+          </button>
         </tr>   
     )
   }

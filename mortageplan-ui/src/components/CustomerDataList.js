@@ -2,6 +2,8 @@ import React from 'react';
 import DataService from '../api/DataService'; 
 import CustomerRowCreator from './CustomerRowCreator';
 import { Link } from 'react-router-dom';
+import Table from 'react-bootstrap/Table';
+import Button from 'react-bootstrap/Button';
 
 class CustomerDataList extends React.Component {
 
@@ -25,9 +27,14 @@ class CustomerDataList extends React.Component {
   render(){
     return(
       <div>
-        <p>CustomerDataList</p>
-        <Link to='/customer/create'>+ New Customer</Link>
-        <table align='center'>
+        <h1>Customer Data List</h1>
+        <Link to='/customer/create'>
+          <Button>
+            + New Customer
+          </Button>      
+        </Link>
+        <br/><br/>
+        <Table align='center' striped bordered hover>
           <thead>
             <tr>
               <th>ID</th>
@@ -36,6 +43,7 @@ class CustomerDataList extends React.Component {
               <th>Interest</th>
               <th>Years</th>
               <th>Monthly Payment</th>
+              <th>Delete Button</th>
             </tr>
           </thead>
           <tbody>
@@ -49,12 +57,10 @@ class CustomerDataList extends React.Component {
               years={customer.years}
             />)}
           </tbody>
-        </table>
-        
+        </Table>      
       </div>
     )
   }
 }
 
 export default CustomerDataList; 
-
