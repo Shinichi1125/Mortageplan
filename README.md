@@ -2,7 +2,7 @@
 An app that calculates the fixed monthly payment for the user's mortgage. 
 
 # Top page screenshot
-![CustomerDataList](https://user-images.githubusercontent.com/37083992/109425252-15377500-79f0-11eb-98ba-e0c5187ad93f.png)
+![StylizedTopPage](https://user-images.githubusercontent.com/37083992/109512126-6e64de80-7aac-11eb-8e04-beabc844548a.png)
 
 # How to start the project in a local environment
 * Replicate the entire project to your own PC by git clone
@@ -20,6 +20,6 @@ An app that calculates the fixed monthly payment for the user's mortgage.
 * More thorough validations
   * The backend doesn't check if the input is not float (something like 0.5) for totalLoanEuro, totalLoanCent, years 
   * I haven't confirmed that the validation of the frontend side is properly working
-* Styling the UI more nicely by using CSS / Bootstrap
+* ~~Styling the UI more nicely by using CSS / Bootstrap~~ (Done)
 * ~~Maybe adding some more functions~~ (update, ~~delete~~ etc) (partially done)
 * ~~Refactoring the code to reduce redundancy~~ (Done)
