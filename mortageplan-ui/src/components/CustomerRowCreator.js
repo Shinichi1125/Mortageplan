@@ -20,6 +20,14 @@ class CustomerRowCreator extends React.Component{
     this.updatePage()
   }  
 
+  deleteCustomer(id){
+    let deleteConfirmed = window.confirm("Are you sure you want to delete this?");
+    if(deleteConfirmed){
+      DataService.deleteCustomer(id);
+      window.location.reload(true);
+    }
+  }
+
   render(){
     let customer = this.props; 
     let interest = 100 * customer.interest;
@@ -34,6 +42,7 @@ class CustomerRowCreator extends React.Component{
           <td>{interest}%</td> 
           <td>{customer.years}</td>
           <td>€{monthlyPayment}</td>
+          <button onClick={() => this.deleteCustomer(customer.id)}>Delete</button>
         </tr>   
     )
   }

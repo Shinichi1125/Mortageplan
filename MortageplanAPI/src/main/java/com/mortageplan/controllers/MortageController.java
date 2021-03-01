@@ -161,4 +161,9 @@ public class MortageController {
 			return new ResponseEntity<>(repository.save(mortage), HttpStatus.OK);
 		}	
 	}
+	
+	@RequestMapping(value = "/delete-customer/{id}", method = RequestMethod.DELETE)
+	public void deleteCustomer(@PathVariable("id") int id) {
+		repository.deleteById(id);
+	}
 }

@@ -31,6 +31,10 @@ class DataService {
       }
     });
   }
+
+  deleteCustomer(id){
+    return axios.delete(`${API_URL}/delete-customer/${id}`);
+  }
 }
 
 export default new DataService()
