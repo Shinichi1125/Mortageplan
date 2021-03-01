@@ -15,6 +15,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.server.ResponseStatusException;
 
 import com.mortageplan.controllers.MortageController;
 import com.mortageplan.model.DecimalMortage;
@@ -74,7 +75,7 @@ public class MortageController {
 	}
 	
 	double calculatePower(double base, int power) {
-	    float result = 1;
+	    double result = 1;
 	    for( int i = 0; i < power; i++ ) {
 	        result *= base;
 	    }

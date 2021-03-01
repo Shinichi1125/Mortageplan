@@ -1,19 +1,26 @@
 package com.mortageplan.controllers;
 
+import static org.junit.jupiter.api.Assertions.assertEquals;
+import static org.mockito.ArgumentMatchers.any;
+import static org.mockito.Mockito.times;
+import static org.mockito.Mockito.verify;
 import static org.mockito.Mockito.when;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.jsonPath;
 
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
+import org.mockito.ArgumentCaptor;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.autoconfigure.web.servlet.WebMvcTest;
 import org.springframework.boot.test.mock.mockito.MockBean;
 import org.springframework.http.HttpStatus;
+import org.springframework.http.ResponseEntity;
 import org.springframework.test.context.junit.jupiter.SpringExtension;
 import org.springframework.test.web.servlet.MockMvc;
 import org.springframework.test.web.servlet.RequestBuilder;
 import org.springframework.test.web.servlet.ResultActions;
+import org.springframework.test.web.servlet.request.MockHttpServletRequestBuilder;
 import org.springframework.test.web.servlet.request.MockMvcRequestBuilders;
 import org.springframework.test.web.servlet.result.MockMvcResultMatchers;
 
@@ -48,7 +55,7 @@ public class MortageControllerTests {
 	}
 	
 	double calculatePower(double base, int power) {
-	    float result = 1;
+	    double result = 1;
 	    for( int i = 0; i < power; i++ ) {
 	        result *= base;
 	    }
@@ -92,7 +99,7 @@ public class MortageControllerTests {
 		existingCustomer.setCustomer("Karvinen");
 		existingCustomer.setTotalLoanEuro(4356);
 		existingCustomer.setTotalLoanCent(0);
-		existingCustomer.setInterest((float) 0.0127);
+		existingCustomer.setInterest((float) 1.27);
 		existingCustomer.setYears(6);
 		
 		DecimalMortage decimalExistingCustomer = combineEuroAndCent(existingCustomer);
@@ -103,7 +110,7 @@ public class MortageControllerTests {
 		U = decimalExistingCustomer.getTotalLoan();    // Total loan
 		int p = 12 * decimalExistingCustomer.getYears();    // The number of payments 
 		// expectedFixedMonthlyPayment: 62.86576062270081
-		expectedFixedMonthlyPayment = U * (b * calculatePower((1+b), p)) / (calculatePower((1+b), p) - 1);	
+		expectedFixedMonthlyPayment = U * (b * calculatePower((1+b), p)) / (calculatePower((1+b), p) - 1);
 		
 		Optional<Mortage> existingCustomerOpt = Optional.ofNullable(existingCustomer);
 		when(repository.findById(KarvinenID)).thenReturn(existingCustomerOpt);
