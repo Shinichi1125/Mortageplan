@@ -32,6 +32,10 @@ class DataService {
     });
   }
 
+  getNoOfCustomers(){
+    return axios.get(`${API_URL}/no-of-customers`);
+  }
+
   deleteCustomer(id){
     return axios.delete(`${API_URL}/delete-customer/${id}`);
   }

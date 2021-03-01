@@ -18,6 +18,7 @@ import org.springframework.web.bind.annotation.RestController;
 import org.springframework.web.server.ResponseStatusException;
 
 import com.mortageplan.controllers.MortageController;
+import com.mortageplan.helpers.Helper;
 import com.mortageplan.model.DecimalMortage;
 import com.mortageplan.model.Mortage;
 import com.mortageplan.repos.MortageRepository;
@@ -29,6 +30,8 @@ import com.mortageplan.repos.MortageRepository;
 public class MortageController {
 	private MortageRepository repository; 
 	private static final Logger LOGGER = LoggerFactory.getLogger(MortageController.class);
+	
+	Helper helper = new Helper();
 	
 	@Autowired
 	MortageController(MortageRepository repository){
@@ -74,21 +77,13 @@ public class MortageController {
 		return decimalMortage;
 	}
 	
-	double calculatePower(double base, int power) {
-	    double result = 1;
-	    for( int i = 0; i < power; i++ ) {
-	        result *= base;
-	    }
-	    return result;
-	}
-	
 	// make sure if the calculatePower method works 
 	// --> working 
 	@RequestMapping(value = "/check-power", method = RequestMethod.GET)
 	public double checkPower(
 			@RequestParam("base") double base ,
 			@RequestParam("power") int power) {
-		return calculatePower(base, power);
+		return helper.calculatePower(base, power);
 	}
 
 	@RequestMapping(value = "/monthly-payment/{id}", method = RequestMethod.GET)
@@ -103,7 +98,7 @@ public class MortageController {
 		U = decimalMortage.getTotalLoan();    // Total loan
 		int p = 12 * decimalMortage.getYears();    // The number of payments 
 		
-		E = U * (b * calculatePower((1+b), p)) / (calculatePower((1+b), p) - 1);
+		E = U * (b * helper.calculatePower((1+b), p)) / (helper.calculatePower((1+b), p) - 1);
 		return E; 
 	}
 	
@@ -160,6 +155,12 @@ public class MortageController {
 		}else {
 			return new ResponseEntity<>(repository.save(mortage), HttpStatus.OK);
 		}	
+	}
+	
+	@RequestMapping(value = "/no-of-customers", method = RequestMethod.GET)
+	public int getNoOfCustomers() {
+		int noOfCustomers = repository.getNoOfCustomers();
+		return noOfCustomers; 
 	}
 	
 	@RequestMapping(value = "/delete-customer/{id}", method = RequestMethod.DELETE)

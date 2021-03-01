@@ -24,6 +24,7 @@ import org.springframework.test.web.servlet.request.MockHttpServletRequestBuilde
 import org.springframework.test.web.servlet.request.MockMvcRequestBuilders;
 import org.springframework.test.web.servlet.result.MockMvcResultMatchers;
 
+import com.mortageplan.helpers.Helper;
 import com.mortageplan.model.DecimalMortage;
 import com.mortageplan.model.Mortage;
 import com.mortageplan.repos.MortageRepository;
@@ -52,14 +53,6 @@ public class MortageControllerTests {
 		decimalMortage.setInterest(interest);
 		decimalMortage.setYears(mortage.getYears());	
 		return decimalMortage; 
-	}
-	
-	double calculatePower(double base, int power) {
-	    double result = 1;
-	    for( int i = 0; i < power; i++ ) {
-	        result *= base;
-	    }
-	    return result;
 	}
 	
 	@Test
@@ -102,6 +95,8 @@ public class MortageControllerTests {
 		existingCustomer.setInterest((float) 1.27);
 		existingCustomer.setYears(6);
 		
+		Helper helper = new Helper();
+		
 		DecimalMortage decimalExistingCustomer = combineEuroAndCent(existingCustomer);
 		double expectedFixedMonthlyPayment = 0;    // Fixed monthly payment 
 		float b = 0 ; 
@@ -110,7 +105,7 @@ public class MortageControllerTests {
 		U = decimalExistingCustomer.getTotalLoan();    // Total loan
 		int p = 12 * decimalExistingCustomer.getYears();    // The number of payments 
 		// expectedFixedMonthlyPayment: 62.86576062270081
-		expectedFixedMonthlyPayment = U * (b * calculatePower((1+b), p)) / (calculatePower((1+b), p) - 1);
+		expectedFixedMonthlyPayment = U * (b * helper.calculatePower((1+b), p)) / (helper.calculatePower((1+b), p) - 1);
 		
 		Optional<Mortage> existingCustomerOpt = Optional.ofNullable(existingCustomer);
 		when(repository.findById(KarvinenID)).thenReturn(existingCustomerOpt);
